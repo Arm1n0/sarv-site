@@ -1,30 +1,50 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="atelier">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f1e7" />
     <title>استودیو سرو — معماری و طراحی داخلی</title>
     <meta
       name="description"
       content="استودیو سرو؛ معماری و طراحی داخلی با تمرکز بر نور، مصالح طبیعی و زندگی روزمره. پروژه‌های مفهومی مسکونی، فرهنگی و اقامتی."
     />
     <link rel="icon" type="image/svg+xml" href="/sarv-site/favicon.svg" />
+    <link rel="preload" href="/sarv-site/fonts/estedad/Estedad-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/sarv-site/fonts/inter-tight/InterTight-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <script>
-      // Restore the visitor's language before first paint to avoid a direction flash.
-      try {
-        if (localStorage.getItem('sarv:lang') === 'en') {
-          document.documentElement.lang = 'en'
-          document.documentElement.dir = 'ltr'
-          document.title = 'SARV Studio — Architecture and interiors'
+      // Restore language and theme before first paint so neither direction nor
+      // palette flashes while the bundle boots. Mirrors src/theme.tsx.
+      (function () {
+        var root = document.documentElement
+        var THEMES = {
+          atelier: { scheme: 'light', color: '#f6f1e7' },
+          midnight: { scheme: 'dark', color: '#12100d' },
+          botanical: { scheme: 'light', color: '#e9ebdf' },
+          terracotta: { scheme: 'light', color: '#f3e5d5' }
         }
-      } catch (error) {
-        /* storage unavailable */
-      }
+        try {
+          if (localStorage.getItem('sarv:lang') === 'en') {
+            root.lang = 'en'
+            root.dir = 'ltr'
+            document.title = 'SARV Studio — Architecture and interiors'
+          }
+          var stored = localStorage.getItem('sarv:theme')
+          // Older builds stored light/dark/system; dark maps to Midnight Gallery.
+          var id = THEMES[stored] ? stored : stored === 'dark' ? 'midnight' : 'atelier'
+          var theme = THEMES[id]
+          root.dataset.theme = id
+          root.style.colorScheme = theme.scheme
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', theme.color)
+        } catch (error) {
+          /* storage unavailable */
+        }
+      })()
     </script>
-    <script type="module" crossorigin src="/sarv-site/assets/index-BTBZu7J-.js"></script>
-    <link rel="stylesheet" crossorigin href="/sarv-site/assets/index-CY3eIl6a.css">
+    <script type="module" crossorigin src="/sarv-site/assets/index-CUeVpHH8.js"></script>
+    <link rel="stylesheet" crossorigin href="/sarv-site/assets/index-D-6PtKLw.css">
   </head>
   <body>
     <div id="root"></div>
